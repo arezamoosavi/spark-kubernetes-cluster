@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  spark_master: &base_spark
+    build:
+      context: .
+      dockerfile: ./container/Dockerfile
+    volumes:
+      - ./src:/opt/project
+    ports:
+      - 4040:4040
+      - 7077:7077
+      - 8081:8081
+      - 8080:8080
+      - 18080:18080
+    restart: unless-stopped
+    command: sh /master.sh
+
+  spark_worker1:
+    <<: *base_faust
+    container_name: spark_worker1
+    environment: 
+      - spark_master=spark://spark_master:7077
+    command: sh /worker.sh
+
+  spark_worker2:
+    <<: *base_faust
+    container_name: spark_worker2
+    environment: 
+      - spark_master=spark://spark_master:7077
+    command: sh /worker.sh
