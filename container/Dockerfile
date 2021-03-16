@@ -29,11 +29,19 @@ ENV PATH=$PATH:$SPARK_HOME/bin
 ENV PATH=$PATH:$SPARK_HOME/sbin
 ENV PYTHONPATH=$SPARK_HOME/python3:$SPARK_HOME/python3/lib/py4j-0.10.7-src.zip:$PYTHONPATH
 RUN mkdir -p /opt/spark/history
-COPY container/spark-defaults.conf /opt/spark/conf/spark-defaults.conf
 
-COPY container/requirements.txt requirements.txt
+# for docker compose:
+# COPY container/spark-defaults.conf /opt/spark/conf/spark-defaults.conf
+# COPY container/requirements.txt requirements.txt
+
+# RUN pip install --no-cache-dir -r requirements.txt
+# RUN mkdir -p /opt/project
+# ADD container/common.sh container/spark-master container/spark-worker /
+
+# for k8s:
+COPY spark-defaults.conf /opt/spark/conf/spark-defaults.conf
+COPY requirements.txt requirements.txt
+
 RUN pip install --no-cache-dir -r requirements.txt
-
 RUN mkdir -p /opt/project
-ADD container/common.sh container/spark-master container/spark-worker /
-# RUN chmod a+rwx /common.sh && chmod a+rwx /spark-master && chmod a+rwx /spark-worker
+ADD common.sh spark-master spark-worker /

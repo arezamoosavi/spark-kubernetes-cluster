@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: spark-master
+spec:
+  ports:
+    - name: webui
+      port: 8080
+      targetPort: 8080
+    - name: history
+      port: 18080
+      targetPort: 18080
+    - name: spark
+      port: 7077
+      targetPort: 7077
+  selector:
+    component: spark-master
