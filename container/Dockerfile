@@ -18,6 +18,19 @@ ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 ENV PATH=$PATH:$JAVA_HOME/bin
 RUN echo $JAVA_HOME
 
+#Install hadoop
+RUN wget https://downloads.apache.org/hadoop/core/hadoop-3.2.1/hadoop-3.2.1.tar.gz
+RUN tar -xzvf hadoop-3.2.1.tar.gz
+RUN mv hadoop-3.2.1 /opt/
+RUN rm -rf hadoop-3.2.1.tar.gz
+
+ENV HADOOP_HOME=/opt/hadoop
+ENV HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+ENV PATH=$PATH:$HADOOP_HOME/bin
+ENV CLASSPATH=$HADOOP_HOME/lib:$CLASSPATH
+ENV HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+ENV HADOOP_OPTS="-Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR"
+ENV LD_LIBRARY_PATH=$HADOOP_HOME/lib/native
 
 # install spark
 RUN wget --no-verbose https://downloads.apache.org/spark/spark-3.1.1/spark-3.1.1-bin-hadoop3.2.tgz
@@ -32,17 +45,9 @@ ENV PYTHONPATH=$SPARK_HOME/python3:$SPARK_HOME/python3/lib/py4j-0.10.7-src.zip:$
 RUN mkdir -p /opt/spark/history
 COPY container/spark-defaults.conf /opt/spark/conf/spark-defaults.conf
 
-#Project
 COPY container/requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 RUN mkdir -p /opt/project
-COPY ./src ./opt/project
-
-COPY container/worker.sh /worker.sh
-RUN chmod a+rwx /worker.sh
-
-COPY container/master.sh /master.sh
-RUN chmod a+rwx /master.sh
-
-WORKDIR /opt/project
+ADD common.sh spark-master spark-worker /
+# RUN chmod a+rwx /common.sh && chmod a+rwx /spark-master && chmod a+rwx /spark-worker

@@ -12,25 +12,13 @@ services:
       - 8080:8080
       - 18080:18080
     restart: unless-stopped
-    command: sh /master.sh
+    command: ["/spark-master"]
 
-  spark_worker1:
+  spark_worker:
     build:
       context: .
       dockerfile: ./container/Dockerfile
-    container_name: spark_worker1
-    environment: 
-      - spark_master=spark://spark_master:7077
-    command: sh /worker.sh
-
-  spark_worker2:
-    build:
-      context: .
-      dockerfile: ./container/Dockerfile
-    container_name: spark_worker2
-    environment: 
-      - spark_master=spark://spark_master:7077
-    command: sh /worker.sh
+    command: ["/spark-worker"]
 
   app:
     build:
