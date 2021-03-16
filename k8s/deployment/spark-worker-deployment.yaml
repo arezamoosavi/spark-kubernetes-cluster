@@ -15,6 +15,7 @@ spec:
       containers:
         - name: spark-worker
           image: 192.168.0.0:5000/spark3:v1
+          imagePullPolicy: "Always"
           command: ["/spark-worker"]
           ports:
             - containerPort: 8081
