@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  spark_master:
+  spark-master:
     build:
       context: .
       dockerfile: ./container/Dockerfile
@@ -14,7 +14,7 @@ services:
     restart: unless-stopped
     command: ["/spark-master"]
 
-  spark_worker:
+  spark-worker:
     build:
       context: .
       dockerfile: ./container/Dockerfile
