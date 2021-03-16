@@ -1,12 +1,10 @@
 version: "3"
 
 services:
-  spark_master: &base_spark
+  spark_master:
     build:
       context: .
       dockerfile: ./container/Dockerfile
-    volumes:
-      - ./src:/opt/project
     ports:
       - 4040:4040
       - 7077:7077
@@ -17,15 +15,27 @@ services:
     command: sh /master.sh
 
   spark_worker1:
-    <<: *base_faust
+    build:
+      context: .
+      dockerfile: ./container/Dockerfile
     container_name: spark_worker1
     environment: 
       - spark_master=spark://spark_master:7077
     command: sh /worker.sh
 
   spark_worker2:
-    <<: *base_faust
+    build:
+      context: .
+      dockerfile: ./container/Dockerfile
     container_name: spark_worker2
     environment: 
       - spark_master=spark://spark_master:7077
     command: sh /worker.sh
+
+  app:
+    build:
+      context: .
+      dockerfile: ./container/Dockerfile
+    volumes:
+      - ./src:/opt/project
+    command: sleep infinity
