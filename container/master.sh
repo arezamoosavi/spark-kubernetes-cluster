@@ -23,3 +23,5 @@ start-slave.sh spark://spark:7077
 
 sleep 1
 echo "worker started at port 8081 ...."
+
+sleep infinity
