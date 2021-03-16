@@ -4,7 +4,7 @@
 
 echo "History server is sarting ...."
 
-. /start-history-server.sh
+start-history-server.sh
 
 echo "$(hostname -i) spark-master" >> /etc/hosts
 
