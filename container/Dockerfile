@@ -18,20 +18,6 @@ ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 ENV PATH=$PATH:$JAVA_HOME/bin
 RUN echo $JAVA_HOME
 
-#Install hadoop
-RUN wget https://downloads.apache.org/hadoop/core/hadoop-3.2.1/hadoop-3.2.1.tar.gz
-RUN tar -xzvf hadoop-3.2.1.tar.gz
-RUN mv hadoop-3.2.1 /opt/
-RUN rm -rf hadoop-3.2.1.tar.gz
-
-ENV HADOOP_HOME=/opt/hadoop
-ENV HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
-ENV PATH=$PATH:$HADOOP_HOME/bin
-ENV CLASSPATH=$HADOOP_HOME/lib:$CLASSPATH
-ENV HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
-ENV HADOOP_OPTS="-Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR"
-ENV LD_LIBRARY_PATH=$HADOOP_HOME/lib/native
-
 # install spark
 RUN wget --no-verbose https://downloads.apache.org/spark/spark-3.1.1/spark-3.1.1-bin-hadoop3.2.tgz
 RUN tar -xzvf spark-3.1.1-bin-hadoop3.2.tgz
