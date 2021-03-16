@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: spark-master
-          image: 192.168.0.0:5000/spark3:v1
+          image: 192.168.0.1:5000/spark3:v1
           imagePullPolicy: "Always"
           command: ["/spark-master"]
           ports:

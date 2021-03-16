@@ -13,24 +13,26 @@ clean-registery:
 
 docker-build:
 	docker build -t spark3 .
-	docker tag spark3 192.168.0.0:5000/spark3:v1
+	docker tag spark3 192.168.0.1:5000/spark3:v1
+	
 
 docker-run:
-	docker run -p 3000:80 --name spark3 -it --rm 192.168.0.0:5000/spark3:v1
+	docker run -p 3000:80 --name spark3 -it --rm 192.168.0.1:5000/spark3:v1
 
 docker-push:
-	docker push 192.168.0.0:5000/spark3:v1
+	docker push 192.168.0.1:5000/spark3:v1
 
 check-registry:
-	curl -X GET http://192.168.0.0:5000/v2/spark3/tags/list
+	curl -X GET http://192.168.0.1:5000/v2/spark3/tags/list
 
 del-minikube:
 	minikube delete
 
 init-minikube:
-	minikube start --insecure-registry="192.168.0.0:5000" --memory 8192 --cpus 4
+	minikube start --insecure-registry="192.168.0.1:5000" --memory 8192 --cpus 4
 	minikube ip
 	minikube status
+	minikube dashboard
 
 all-deploy:
 	kubectl apply -f deployment/
