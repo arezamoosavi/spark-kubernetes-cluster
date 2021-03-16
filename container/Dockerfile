@@ -49,5 +49,5 @@ COPY container/requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 RUN mkdir -p /opt/project
-ADD common.sh spark-master spark-worker /
+ADD container/common.sh container/spark-master container/spark-worker /
 # RUN chmod a+rwx /common.sh && chmod a+rwx /spark-master && chmod a+rwx /spark-worker
