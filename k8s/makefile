@@ -13,7 +13,7 @@ clean-registery:
 
 docker-build:
 	docker build -t spark3 .
-	docker tag spark3 192.168.0.1:5000/spark3:v1
+	docker tag "from_docker_compose" 192.168.0.1:5000/spark3:v1
 	
 
 docker-run:
@@ -32,7 +32,9 @@ init-minikube:
 	minikube start --insecure-registry="192.168.0.1:5000" --memory 8192 --cpus 4
 	minikube ip
 	minikube status
-	minikube dashboard
+	minikube dashboard --url &
+	kubectl proxy --address='0.0.0.0' --disable-filter=true --port=5885 & 
+	curl -X GET http://ip_add:5885/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/overview?namespace=default
 
 all-deploy:
 	kubectl apply -f deployment/
@@ -43,3 +45,4 @@ delete-all-deploy:
 logging:
 	kubectl get all
 	kubectl logs -f pod/pod-id
+	kubectl port-forward --address 0.0.0.0 service/spark-master 8080:8080 18080:18080 7077:7077 &
