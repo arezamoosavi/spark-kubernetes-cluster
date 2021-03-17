@@ -20,7 +20,7 @@ RUN echo $JAVA_HOME
 
 RUN apt-get update && \
     ln -s /lib /lib64 && \
-    apt install -y bash tini libc6 libpam-modules krb5-user libnss3 procps && \
+    apt-get install -y bash tini libc6 libpam-modules krb5-user libnss3 procps && \
     rm /bin/sh && \
     ln -sv /bin/bash /bin/sh && \
     echo "auth required pam_wheel.so use_uid" >> /etc/pam.d/su && \
