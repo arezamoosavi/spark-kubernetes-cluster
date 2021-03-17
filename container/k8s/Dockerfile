@@ -13,7 +13,7 @@ RUN set -ex && \
     sed -i 's/http:\/\/deb.\(.*\)/https:\/\/deb.\1/g' /etc/apt/sources.list && \
     apt-get update && \
     ln -s /lib /lib64 && \
-    apt-get install -y bash tini libc6 libpam-modules krb5-user libnss3 procps && \
+    apt-get install -y bash tini libc6 libpam-modules libnss3 procps && \
     rm /bin/sh && \
     ln -sv /bin/bash /bin/sh && \
     echo "auth required pam_wheel.so use_uid" >> /etc/pam.d/su && \
