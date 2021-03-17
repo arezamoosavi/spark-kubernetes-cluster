@@ -51,6 +51,8 @@ logging:
 
 
 run_k8s:
+	kubectl create serviceaccount spark
+	kubectl create clusterrolebinding spark-role --clusterrole=edit  --serviceaccount=default:spark --namespace=default
 	kubectl cluster-info
 	./bin/spark-submit --master k8s://https://192.168.0.2:8443 --deploy-mode cluster --conf spark.executor.instances=1 --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark --conf spark.kubernetes.container.image=192.168.0.1:5000/spark3py-alimo:v1 --class org.apache.spark.examples.SparkPi --name spark-pi local:///opt/spark/examples/jars/spark-examples_2.12-3.1.1.jar
 	./bin/spark-submit --master k8s://https://192.168.0.2:8443 --deploy-mode cluster --conf spark.executor.instances=1 --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark --conf spark.kubernetes.container.image=192.168.0.1:5000/spark3py-alimo:v1 --name spark-pi local:///opt/spark/examples/src/main/python/pi.py

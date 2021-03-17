@@ -34,8 +34,8 @@ RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt && \
     rm -rf requirements.txt
 
-RUN mkdir -p /opt/spark/work-dir
-COPY ./src /opt/spark/work-dir
+RUN mkdir -p /opt/work-dir
+COPY ./src /opt/work-dir
 
 COPY container/k8s/entrypoint.sh /opt/
 COPY container/k8s/decom.sh /opt/
