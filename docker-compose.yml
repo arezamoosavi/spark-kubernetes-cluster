@@ -20,6 +20,12 @@ services:
       dockerfile: ./container/Dockerfile
     command: ["/spark-worker"]
 
+  spark-k8s:
+    build:
+      context: .
+      dockerfile: ./container/k8s/Dockerfile
+    restart: unless-stopped
+    
   app:
     build:
       context: .
