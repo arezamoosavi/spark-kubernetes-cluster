@@ -1,7 +1,5 @@
 FROM openjdk:11-jre-slim
 
-ARG spark_uid=185
-
 RUN apt-get update -y && apt-get install -y libzbar-dev bash gcc git libc-dev curl wget vim nano \
     && apt-get install -y iputils-ping telnet openssh-client net-tools \
     man unzip vim-tiny bc openssh-server thrift-compiler netcat sudo \
