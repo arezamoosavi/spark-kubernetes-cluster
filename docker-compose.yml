@@ -25,6 +25,7 @@ services:
       context: .
       dockerfile: ./container/k8s/Dockerfile
     restart: unless-stopped
+    command: sleep infinity
     
   app:
     build:
