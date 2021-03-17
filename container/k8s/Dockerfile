@@ -18,9 +18,7 @@ ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 ENV PATH=$PATH:$JAVA_HOME/bin
 RUN echo $JAVA_HOME
 
-RUN set -ex && \
-    sed -i 's/http:\/\/deb.\(.*\)/https:\/\/deb.\1/g' /etc/apt/sources.list && \
-    apt-get update && \
+RUN apt-get update && \
     ln -s /lib /lib64 && \
     apt install -y bash tini libc6 libpam-modules krb5-user libnss3 procps && \
     rm /bin/sh && \
